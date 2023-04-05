@@ -1,0 +1,26 @@
+# Directories
+.idea/
+.vscode/
+.settings/
+.gradle
+out/
+target/
+build/
+bin/
+log/
+
+# Files
+*.iml
+*.iws
+*.ipr
+*.ids
+*.jar
+.project
+.classpath
+.DS_Store
+.flattened-pom.xml
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+
+# Not Files
+!gradle/wrapper/gradle-wrapper.jar
