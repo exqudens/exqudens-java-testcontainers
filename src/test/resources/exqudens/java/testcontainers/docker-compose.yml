@@ -1,0 +1,32 @@
+version: '3.6'
+services:
+
+  &keycloak-db-host keycloak-db:
+    image: 'postgres:12.2'
+    expose:
+      - &keycloak-db-port 5432
+    ports:
+      - '9901:5432'
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_DB: &keycloak-db-name 'test_db'
+      POSTGRES_USER: &keycloak-db-user 'test_user'
+      POSTGRES_PASSWORD: &keycloak-db-password 'test_password'
+
+  keycloak-service:
+    image: 'quay.io/keycloak/keycloak:9.0.0'
+    ports:
+      - '9902:8080'
+    environment:
+      DB_VENDOR: 'POSTGRES'
+      DB_ADDR: *keycloak-db-host
+      DB_PORT: *keycloak-db-port
+      DB_SCHEMA: 'public'
+      DB_DATABASE: *keycloak-db-name
+      DB_USER: *keycloak-db-user
+      DB_PASSWORD: *keycloak-db-password
+      KEYCLOAK_USER: 'admin'
+      KEYCLOAK_PASSWORD: 'admin'
+    depends_on:
+      - 'keycloak-db'
+    restart: 'always'
